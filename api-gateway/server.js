@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 // Proxy requests đến Customer Service
 // Tất cả request đến /api/customers/* sẽ được chuyển đến Customer Service
 app.use('/api/customers', createProxyMiddleware({
-    target: CUSTOMER_SERVICE_URL,
+    target: CUSTOMER_SERVICE_URL + '/customers',
     changeOrigin: true, // Cần thiết cho virtual hosted sites và CORS
     pathRewrite: {
         '^/api/customers': '/customers', // Xóa '/api/customers' khỏi path trước khi gửi đi
@@ -48,7 +48,7 @@ app.use('/api/customers', createProxyMiddleware({
 
 // Proxy requests đến Product Service
 app.use('/api/products', createProxyMiddleware({
-    target: PRODUCT_SERVICE_URL,
+    target: PRODUCT_SERVICE_URL + '/products',
     changeOrigin: true,
     pathRewrite: {
         '^/api/products': '/products', // /api/products/abc -> /products/abc
@@ -64,7 +64,7 @@ app.use('/api/products', createProxyMiddleware({
 
 // Proxy requests đến Order Service
 app.use('/api/orders', createProxyMiddleware({
-    target: ORDER_SERVICE_URL,
+    target: ORDER_SERVICE_URL + '/orders',
     changeOrigin: true,
     pathRewrite: {
         '^/api/orders': '/orders', // /api/orders/xyz -> /orders/xyz
@@ -88,7 +88,7 @@ app.use('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(` K̴i̴t̴t̴y̴ API Gateway đang lắng nghe trên cổng ${PORT}`);
     console.log(` перенаправлення запитів до:`);
-    console.log(`  -> API Service: http://localhost:${PORT}`);
+    console.log(`  -> API Service: http://localhost:${CUSTOMER_SERVICE_URL}`);
     console.log(`  -> Customer Service: ${CUSTOMER_SERVICE_URL}`);
     console.log(`  -> Product Service:  ${PRODUCT_SERVICE_URL}`);
     console.log(`  -> Order Service:    ${ORDER_SERVICE_URL}`);
