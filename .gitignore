@@ -1,0 +1,8 @@
+/customer-service/.env
+/customer-service/node_modules
+/order-service/node_modules
+/product-service/node_modules
+/order-service/.env
+/product-service/.env
+/api-gateway/.env
+/api-gateway/node_modules
